@@ -3,21 +3,23 @@
 
 import 'dart:convert';
 import 'package:flutter_news_api/src/models/item_model.dart';
-import 'package:http/http.dart' show Client;
+import 'package:http/http.dart' as http show Client;
 
 const _root = 'https://hacker-news.firebaseio.com/v0';
 
 class NewsApiProvider {
-  Client client = Client();
+  // Client client = Client();
+  var client = http.Client();
   fetchTopIds() async {
-    final response = await client.get('$_root/topstories.json' as dynamic);
+    var future = client.get(Uri.parse('$_root/topstories.json'));
+    final response = await future;
     final ids = json.decode(response.body);
     //gets list of ids:
     return ids;
   }
 
   fetchItem(int id) async {
-    final response = await client.get('$_root/item/$id.json' as dynamic);
+    final response = await client.get(Uri.parse('$_root/item/$id.json'));
     final parsedJson = json.decode(response.body);
 
     //this returns the model:
