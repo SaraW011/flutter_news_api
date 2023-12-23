@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:http/testing.dart';
 
 void main() {
-  test('fetchTopIds returns a list of ids', () {
+  test('fetchTopIds returns a list of ids', () async {
     //setup of test case
     //better if test doesn't reach out to external api,
     //so use http package "MockClient" to complete test without reachig external
@@ -13,7 +13,20 @@ void main() {
     newsApi.client = MockClient(
       (request) async => Response(json.encode([1, 2, 3, 4]), 200),
     );
-    final ids = newsApi.fetchTopIds();
+    final ids = await newsApi.fetchTopIds();
     expect(ids, [1, 2, 3, 4]);
+  });
+
+  test('fetchItem returns item model', () async {
+    //setup of test case
+    //better if test doesn't reach out to external api,
+    //so use http package "MockClient" to complete test without reachig external
+    final newsApi = NewsApiProvider();
+    newsApi.client = MockClient((request) async {
+      final jsonMap = {'id': 123};
+      return Response(json.encode(jsonMap), 200);
+    });
+    final item = await newsApi.fetchItem(999);
+    expect(item.id, 123);
   });
 }

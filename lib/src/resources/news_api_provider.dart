@@ -10,14 +10,14 @@ const _root = 'https://hacker-news.firebaseio.com/v0';
 class NewsApiProvider {
   Client client = Client();
   fetchTopIds() async {
-    final response = await client.get('$_root/topstories.json' as Uri);
+    final response = await client.get('$_root/topstories.json' as dynamic);
     final ids = json.decode(response.body);
     //gets list of ids:
     return ids;
   }
 
   fetchItem(int id) async {
-    final response = await client.get('$_root/item/$id.json' as Uri);
+    final response = await client.get('$_root/item/$id.json' as dynamic);
     final parsedJson = json.decode(response.body);
 
     //this returns the model:
