@@ -10,6 +10,8 @@ const _root = 'https://hacker-news.firebaseio.com/v0';
 class NewsApiProvider {
   Client client = Client();
   // var client = Client();
+
+  // topIds will always be fetch externally from api!
   fetchTopIds() async {
     var future = client.get(Uri.parse('$_root/topstories.json'));
     final response = await future;
