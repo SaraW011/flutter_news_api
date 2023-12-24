@@ -3,13 +3,13 @@
 
 import 'dart:convert';
 import 'package:flutter_news_api/src/models/item_model.dart';
-import 'package:http/http.dart' as http show Client;
+import 'package:http/http.dart';
 
 const _root = 'https://hacker-news.firebaseio.com/v0';
 
 class NewsApiProvider {
-  // Client client = Client();
-  var client = http.Client();
+  Client client = Client();
+  // var client = Client();
   fetchTopIds() async {
     var future = client.get(Uri.parse('$_root/topstories.json'));
     final response = await future;
