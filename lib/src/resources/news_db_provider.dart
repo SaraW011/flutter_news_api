@@ -18,7 +18,14 @@ class NewsDbProvider {
     final path = join(documentsDirectory.path, "items.db");
     //reach out to path or create the db if not on device:
     //onCreate is called only 1st time user access
-    db = await openDatabase(path,
-        version: 1, onCreate: (Database newDb, int version) {});
+    db = await openDatabase(path, version: 1,
+        // "onCreate" is called b4 db var, therefore initialized with "newDb":
+        onCreate: (Database newDb, int version) {
+      //initial setup of db
+      //sql code for sending arbitrary snippit to db:
+      newDb.execute("""
+        CREATE TABLE Items
+         """);
+    });
   }
 }
