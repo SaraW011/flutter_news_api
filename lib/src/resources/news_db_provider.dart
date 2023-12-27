@@ -44,5 +44,17 @@ class NewsDbProvider {
         )
          """);
     });
+//method takes id and returns an item:
+    fetchItem(int id) async {
+      //when we want the entire item, return spesific columns null
+      final maps = await db.query(
+        "Items",
+        columns: null,
+        where: "id =?",
+        whereArgs: [id],
+      );
+      if (maps.length > 0) {}
+      return null;
+    }
   }
 }
