@@ -1,3 +1,4 @@
+import 'package:flutter_news_api/src/models/item_model.dart';
 import 'package:sqflite/sqflite.dart';
 //"path_provider" reaches to mobile device local temp directory:
 import 'package:path_provider/path_provider.dart';
@@ -39,22 +40,25 @@ class NewsDbProvider {
           score INTEGER, 
           title TEXT, 
           descendants INTEGER
-
-
         )
          """);
     });
+  }
+
 //method takes id and returns an item:
-    fetchItem(int id) async {
-      //when we want the entire item, return spesific columns null
-      final maps = await db.query(
-        "Items",
-        columns: null,
-        where: "id =?",
-        whereArgs: [id],
-      );
-      if (maps.length > 0) {}
-      return null;
+  fetchItem(int id) async {
+    //when we want the entire item, return spesific columns null
+    final maps = await db.query(
+      "Items",
+      columns: null,
+      where: "id =?",
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      //as in "fetchItem" in new_api_provider, map returns a model
+      // db is "translated" b/c no bool available (see "item_model"):
+      return ItemModel.fromDb(maps.first);
     }
+    return null;
   }
 }
