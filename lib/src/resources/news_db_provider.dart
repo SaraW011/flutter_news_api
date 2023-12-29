@@ -61,4 +61,9 @@ class NewsDbProvider {
     }
     return null;
   }
+
+  addItem(ItemModel item) {
+    // for 2nd arg do the opposite of "ItemModel)"
+    db.insert("Items", item.toMapForDB());
+  }
 }
