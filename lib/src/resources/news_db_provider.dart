@@ -12,7 +12,7 @@ class NewsDbProvider {
   //"Database" comes from sqflite pckg, connects to db on device:
   late Database db;
 //"init" solves inability of async constructor:
-  init() async {
+  void init() async {
     //package:path_provider, see "Directory" info:
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     //creates path to db:
@@ -46,7 +46,7 @@ class NewsDbProvider {
   }
 
 //method takes id and returns an item:
-  fetchItem(int id) async {
+  Future<ItemModel?> fetchItem(int id) async {
     //when we want the entire item, return spesific columns null
     final maps = await db.query(
       "Items",
@@ -62,7 +62,7 @@ class NewsDbProvider {
     return null;
   }
 
-  addItem(ItemModel item) {
+  dynamic addItem(ItemModel item) {
     // for 2nd arg do the opposite of "ItemModel)"
     db.insert("Items", item.toMapForDB());
   }

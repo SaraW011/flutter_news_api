@@ -12,7 +12,7 @@ class NewsApiProvider {
   // var client = Client();
 
   // topIds will always be fetch externally from api!
-  fetchTopIds() async {
+  Future<List<int>> fetchTopIds() async {
     var future = client.get(Uri.parse('$_root/topstories.json'));
     final response = await future;
     final ids = json.decode(response.body);
@@ -20,7 +20,7 @@ class NewsApiProvider {
     return ids;
   }
 
-  fetchItem(int id) async {
+  Future<ItemModel> fetchItem(int id) async {
     final response = await client.get(Uri.parse('$_root/item/$id.json'));
     final parsedJson = json.decode(response.body);
 
