@@ -17,7 +17,8 @@ class NewsApiProvider {
     final response = await future;
     final ids = json.decode(response.body);
     //gets list of ids:
-    return ids;
+    //cast is a method that returns a list with a type we specify:
+    return ids.cast<int>();
   }
 
   Future<ItemModel> fetchItem(int id) async {
