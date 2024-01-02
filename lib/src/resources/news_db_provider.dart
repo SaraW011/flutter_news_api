@@ -11,7 +11,7 @@ import 'dart:async';
 class NewsDbProvider {
   //"Database" comes from sqflite pckg, connects to db on device:
   late Database db;
-//"init" solves inability of async constructor:
+//"init" solves inability of having an async constructor:
   void init() async {
     //package:path_provider, see "Directory" info:
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -62,8 +62,7 @@ class NewsDbProvider {
     return null;
   }
 
-  dynamic addItem(ItemModel item) {
-    // for 2nd arg do the opposite of "ItemModel)"
-    db.insert("Items", item.toMapForDB());
+  Future<int> addItem(ItemModel item) {
+    return db.insert("Items", item.toMapForDB());
   }
 }

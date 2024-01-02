@@ -4,6 +4,7 @@
 import 'dart:convert';
 import 'package:flutter_news_api/src/models/item_model.dart';
 import 'package:http/http.dart';
+// import 'dart:async';
 
 const _root = 'https://hacker-news.firebaseio.com/v0';
 
@@ -15,9 +16,10 @@ class NewsApiProvider {
   Future<List<int>> fetchTopIds() async {
     var future = client.get(Uri.parse('$_root/topstories.json'));
     final response = await future;
+    //"decode" returns a list of unknown contents
     final ids = json.decode(response.body);
-    //gets list of ids:
-    //cast is a method that returns a list with a type we specify:
+    //cast is a method that returns a list with a type we specify,
+    //"cast" prevents test err of returning list of ids.
     return ids.cast<int>();
   }
 
