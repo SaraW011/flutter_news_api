@@ -27,3 +27,12 @@ class Repository {
     return item;
   }
 }
+
+//create abstrat and import to api_provider:
+abstract class Source {
+  //same as in "api_provider"
+  Future<List<int>>? fetchTopIds();
+  Future<ItemModel> fetchItem(int id);
+}
+
+abstract class Cache {}

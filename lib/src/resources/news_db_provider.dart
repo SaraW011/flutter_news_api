@@ -1,4 +1,5 @@
 import 'package:flutter_news_api/src/models/item_model.dart';
+import 'package:flutter_news_api/src/resources/repository.dart';
 import 'package:sqflite/sqflite.dart';
 //"path_provider" reaches to mobile device local temp directory:
 import 'package:path_provider/path_provider.dart';
@@ -8,9 +9,16 @@ import 'dart:async';
 
 //note: asynchronous methods cannot go into a constructor
 
-class NewsDbProvider {
+class NewsDbProvider implements Source {
   //"Database" comes from sqflite pckg, connects to db on device:
   late Database db;
+
+//to-do: fetch and store top ids:
+  @override
+  Future<List<int>>? fetchTopIds() {
+    return null;
+  }
+
 //"init" solves inability of having an async constructor:
   void init() async {
     //package:path_provider, see "Directory" info:
@@ -46,7 +54,8 @@ class NewsDbProvider {
   }
 
 //method takes id and returns an item:
-  Future<ItemModel?> fetchItem(int id) async {
+  @override
+  Future<ItemModel> fetchItem(int id) async {
     //when we want the entire item, return spesific columns null
     final maps = await db.query(
       "Items",
