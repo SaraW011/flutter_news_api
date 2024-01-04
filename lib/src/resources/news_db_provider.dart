@@ -68,7 +68,9 @@ class NewsDbProvider implements Source {
       // db is "translated" b/c no bool available (see "item_model"):
       return ItemModel.fromDb(maps.first);
     }
-    return null;
+    // return null;
+    //cannot return null so:
+    throw 'Out of llamas!';
   }
 
   Future<int> addItem(ItemModel item) {

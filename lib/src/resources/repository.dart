@@ -18,9 +18,9 @@ class Repository {
 
   Future<ItemModel> fetchItem(int id) async {
     var item = await dbProvider.fetchItem(id);
-    if (item != null) {
-      return item;
-    }
+    // if (item != null) {
+    //   return item;
+    // }
     //reasign var "item" to new variable:
     item = await apiProvider.fetchItem(id);
     dbProvider.addItem(item);
