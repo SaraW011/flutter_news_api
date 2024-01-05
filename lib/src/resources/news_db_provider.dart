@@ -9,7 +9,7 @@ import 'dart:async';
 
 //note: asynchronous methods cannot go into a constructor
 
-class NewsDbProvider implements Source {
+class NewsDbProvider implements Source, Cache {
   //"Database" comes from sqflite pckg, connects to db on device:
   late Database db;
 

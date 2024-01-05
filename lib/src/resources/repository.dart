@@ -8,8 +8,18 @@ import '../models/item_model.dart';
 //governs access to either of the providers:
 class Repository {
   //db must be first initialized and then get data
-  NewsDbProvider dbProvider = NewsDbProvider();
-  NewsApiProvider apiProvider = NewsApiProvider();
+  //refractored, can now easily work with any number of sources:
+  List<Source> sources = <Source>[
+    NewsApiProvider(),
+    NewsDbProvider(),
+  ];
+  List<Cache> caches = <Cache>[
+    NewsDbProvider(),
+  ];
+
+  //non-refractored, can only work with pre-built sources:
+  // NewsDbProvider dbProvider = NewsDbProvider();
+  // NewsApiProvider apiProvider = NewsApiProvider();
 
 //does not store top ids, only calls api
   Future<List<int>> fetchTopIds() {
@@ -35,4 +45,6 @@ abstract class Source {
   Future<ItemModel> fetchItem(int id);
 }
 
-abstract class Cache {}
+abstract class Cache {
+  Future<int> addItem(ItemModel item);
+}
