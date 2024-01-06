@@ -27,15 +27,32 @@ class Repository {
   }
 
   Future<ItemModel> fetchItem(int id) async {
-    var item = await dbProvider.fetchItem(id);
-    // if (item != null) {
-    //   return item;
-    // }
-    //reasign var "item" to new variable:
-    item = await apiProvider.fetchItem(id);
-    dbProvider.addItem(item);
+    ItemModel item;
+    Source source;
+
+    for (source in sources) {
+      item = await source.fetchItem(id);
+      if (item != null) {
+        break;
+      }
+    }
+    for (var cache in caches) {
+      cache.addItem(item);
+    }
     return item;
   }
+
+  //not refractored:
+  // Future<ItemModel> fetchItem(int id) async {
+  //   var item = await dbProvider.fetchItem(id);
+  //   // if (item != null) {
+  //   //   return item;
+  //   // }
+  //   //reasign var "item" to new variable:
+  //   item = await apiProvider.fetchItem(id);
+  //   dbProvider.addItem(item);
+  //   return item;
+  // }
 }
 
 //create abstrat and import to api_provider:
