@@ -13,6 +13,11 @@ class NewsDbProvider implements Source, Cache {
   //"Database" comes from sqflite pckg, connects to db on device:
   late Database db;
 
+  //neet this "init" for the "newsDbProvider" instance bellow:
+  NewsDbProvider() {
+    init();
+  }
+
 //to-do: fetch and store top ids:
   @override
   Future<List<int>>? fetchTopIds() {
@@ -78,5 +83,7 @@ class NewsDbProvider implements Source, Cache {
   }
 }
 
-//this instance prevents opening db twice in the Repository class:
+//this instance prevents opening multiple connections to db
+//(in the Repository class):
+//note: missing init
 final newsDbProvider = NewsDbProvider();
