@@ -10,11 +10,13 @@ class Repository {
   //db must be first initialized and then get data
   //refractored, can now easily work with any number of sources:
   List<Source> sources = <Source>[
+    // db:
     NewsApiProvider(),
-    NewsDbProvider(),
+    // instance of db:
+    newsDbProvider,
   ];
   List<Cache> caches = <Cache>[
-    NewsDbProvider(),
+    newsDbProvider,
   ];
 
   //non-refractored, can only work with pre-built sources:

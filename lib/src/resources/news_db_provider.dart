@@ -77,3 +77,6 @@ class NewsDbProvider implements Source, Cache {
     return db.insert("Items", item.toMapForDB());
   }
 }
+
+//this instance prevents opening db twice in the Repository class:
+final newsDbProvider = NewsDbProvider();
