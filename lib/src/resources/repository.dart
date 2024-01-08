@@ -25,7 +25,11 @@ class Repository {
 
 //does not store top ids, only calls api
   Future<List<int>> fetchTopIds() {
-    return apiProvider.fetchTopIds();
+    // return apiProvider.fetchTopIds();
+
+    //ToDo: iterate over sources when fetchTopIds implemented
+    //in provider, as bellow
+    return sources[1].fetchTopIds();
   }
 
   Future<ItemModel> fetchItem(int id) async {
