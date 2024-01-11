@@ -39,6 +39,7 @@ dependencies:
   path_provider: ^2.1.1
   http: ^1.1.0
   test: ^1.24.3
+  rxdart: ^0.27.7
 
   #Dependency for SQLite for creating database:
 
