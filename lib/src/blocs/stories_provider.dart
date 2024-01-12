@@ -2,20 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'stories_bloc.dart';
+export 'stories_bloc.dart';
 
 class StoriesProvider extends InheritedWidget {
   final StoriesBloc bloc;
 
-  StoriesProvider({required Key key, required Widget child})
+  StoriesProvider({Key? key, required Widget child})
       : bloc = StoriesBloc(),
         super(key: key, child: child);
 
-  //the argument of the "bool" is not important, represented with _:
-  bool updateShouldNotify(_) => true;
+  //the argument of the "bool" is not important, represented with "oldWidget":
+  @override
+  bool updateShouldNotify(oldWidget) => true;
 
+//get access to this bloc at any location in widget hierarchy:
   static StoriesBloc of(BuildContext context) {
-    return (context.getInheritedWidgetOfExactType(StoriesProvider)
-            as StoriesProvider)
+    return (context.getInheritedWidgetOfExactType(
+            // StoriesProvider
+            ) as StoriesProvider)
         .bloc;
   }
 }

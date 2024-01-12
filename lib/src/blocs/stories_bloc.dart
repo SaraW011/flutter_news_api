@@ -5,7 +5,6 @@
 import 'package:flutter_news_api/src/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 // import '../models/item_model.dart';
-// import 'package:flutter_news_api/src/resources/repository.dart';
 
 class StoriesBloc {
   final _repository = Repository();
@@ -13,7 +12,7 @@ class StoriesBloc {
   //creating the StreamController = PublishSubject:
   final _topIds = PublishSubject<List<int>>();
 
-  //Getter to Stream (prev Observable):
+//Getter to Stream (prev Observable):
   Stream<List<int>> get topIds => _topIds.stream;
 
 //since the repository fetches the info, we will call it and send to sink:
