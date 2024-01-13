@@ -1,4 +1,5 @@
-//provider makes the bloc available anywhere inside the widget tree:
+//provider makes the bloc available anywhere inside the widget tree
+//make sure to export bloc from here as well:
 
 import 'package:flutter/material.dart';
 import 'stories_bloc.dart';

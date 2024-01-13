@@ -1,4 +1,5 @@
-//when creating a bloc make sure to create a provider along with it:
+//when creating a bloc make sure to create a provider along with it
+//and export this file in provider:
 
 //Bloc uses StreamController using "sink" and "stream"
 //RxDart pkg: StreamController = Subject, stream = Observable, now Stream
