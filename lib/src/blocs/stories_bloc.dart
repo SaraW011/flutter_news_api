@@ -3,6 +3,7 @@
 
 //Bloc uses StreamController using "sink" and "stream"
 //RxDart pkg: StreamController = Subject, stream = Observable, now Stream
+import 'package:flutter_news_api/src/models/item_model.dart';
 import 'package:flutter_news_api/src/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 // import '../models/item_model.dart';
@@ -23,8 +24,21 @@ class StoriesBloc {
     _topIds.sink.add(ids!);
   }
 
+//the transformer uses a map key-value object in order to prevent the stateless
+// widget from rebuilding every time it receives data from the stream:
+  _itemsTransformer() {
+    return ScanStreamTransformer(
+        (Map<int, Future<ItemModel>>? cache, int id, index) {},
+
+        //return empty map:
+        <int, Future<ItemModel>>{});
+  }
+
 //closing instanse of sink ("cleanup"):
   dispose() {
     _topIds.close();
   }
 }
+
+
+// accumulated, value, index) => null, seed, 
