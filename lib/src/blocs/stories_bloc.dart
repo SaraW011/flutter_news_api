@@ -26,13 +26,13 @@ class StoriesBloc {
 
 //the transformer uses a map key-value object in order to prevent the stateless
 // widget from rebuilding every time it receives data from the stream:
-  _itemsTransformer() {
-    return ScanStreamTransformer(
-        (Map<int, Future<ItemModel>>? cache, int id, index) {},
+  // _itemsTransformer() {
+  //   return ScanStreamTransformer(
+  //       (Map<int, Future<ItemModel>>? cache, int id, index) {},
 
-        //return empty map:
-        <int, Future<ItemModel>>{});
-  }
+  //       //return empty map:
+  //       <int, Future<ItemModel>>{});
+  // }
 
 //closing instanse of sink ("cleanup"):
   dispose() {

@@ -23,7 +23,7 @@ class NewsList extends StatelessWidget {
     );
   }
 
-// //helper method, bloc testing:
+//helper method, bloc testing:
   Widget buildList(StoriesBloc bloc) {
     return StreamBuilder(
         stream: bloc.topIds,
