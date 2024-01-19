@@ -11,6 +11,7 @@ class NewsList extends StatelessWidget {
     final bloc = StoriesProvider.of(context);
 ///////////////////////// BAD PRACTICE
     bloc.fetchTopIds();
+
     // BAD PRACTICE////////////////////////
     return Scaffold(
       appBar: AppBar(
@@ -18,8 +19,8 @@ class NewsList extends StatelessWidget {
           'Top News',
         ),
       ),
-      body: buildList(bloc),
-      // body: const Text("this is where the bloc is"),
+      // body: buildList(bloc),
+      body: const Text("this is where the bloc is"),
     );
   }
 
@@ -34,9 +35,9 @@ class NewsList extends StatelessWidget {
             );
           }
           return ListView.builder(
-            itemCount: snapshot.data!.length,
+            itemCount: snapshot.data?.length,
             itemBuilder: (context, int index) {
-              return Text(snapshot.data![index] as String);
+              return Text(snapshot.data![index].toString());
             },
           );
         });

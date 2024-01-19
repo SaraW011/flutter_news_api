@@ -13,6 +13,11 @@ class StoriesBloc {
   //Subject fetchs all top ids and makes available for widgets
   //creating the StreamController = PublishSubject:
   final _topIds = PublishSubject<List<int>>();
+//streamcontroller that emits the most recent data event:
+  final _items = BehaviorSubject<int>();
+
+//Getter to sink:
+  Function(int) get fetchItem => _items.sink.add;
 
 //Getter to Stream (prev Observable):
   Stream<List<int>> get topIds => _topIds.stream;
@@ -24,21 +29,25 @@ class StoriesBloc {
     _topIds.sink.add(ids!);
   }
 
-//the transformer uses a map key-value object in order to prevent the stateless
+// the transformer uses a map key-value object in order to prevent the stateless
 // widget from rebuilding every time it receives data from the stream:
-  // _itemsTransformer() {
-  //   return ScanStreamTransformer(
-  //       (Map<int, Future<ItemModel>>? cache, int id, index) {},
+  _itemsTransformer() {
+    return ScanStreamTransformer(
+        (Map<int, Future<ItemModel>>? cache, int id, index) {
+      //find id and item and add to cache:
+      cache?[id] = _repository.fetchItem(id);
+      return cache;
+    },
 
-  //       //return empty map:
-  //       <int, Future<ItemModel>>{});
-  // }
+        //return empty map:
+        <int, Future<ItemModel>>{});
+  }
 
 //closing instanse of sink ("cleanup"):
   dispose() {
     _topIds.close();
+    _items.close();
   }
 }
 
-
-// accumulated, value, index) => null, seed, 
+// accumulated, value, index) => null, seed,
