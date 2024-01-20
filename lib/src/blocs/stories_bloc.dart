@@ -16,6 +16,12 @@ class StoriesBloc {
 //streamcontroller that emits the most recent data event:
   final _items = BehaviorSubject<int>();
 
+  //BAD PRASCTICE SAMPLE FOR EXPOSING STREAM:!!!!!!!!!!!!!!!!!
+  // b/c it runs multiple times when each widget is invoked:
+  //every time the widget accesses the getter the function will run
+  //and get a chache object that is not shared with other widgets
+  // get items => _items.stream.transform(_itemsTransformer());
+
 //Getter to sink:
   Function(int) get fetchItem => _items.sink.add;
 
