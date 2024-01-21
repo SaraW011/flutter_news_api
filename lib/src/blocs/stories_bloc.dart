@@ -16,10 +16,11 @@ class StoriesBloc {
 //streamcontroller that emits the most recent data event:
   final _items = BehaviorSubject<int>();
 
-  //BAD PRASCTICE SAMPLE FOR EXPOSING STREAM:!!!!!!!!!!!!!!!!!
+  //GETTER *BAD PRASCTICE* SAMPLE FOR EXPOSING STREAM:!!!!!!!!!!!!!!!!!
   // b/c it runs multiple times when each widget is invoked:
   //every time the widget accesses the getter the function will run
-  //and get a chache object that is not shared with other widgets
+  //and get a cache object that is not shared with other widgets
+
   // get items => _items.stream.transform(_itemsTransformer());
 
 //Getter to sink:
@@ -37,6 +38,7 @@ class StoriesBloc {
 
 // the transformer uses a map key-value object in order to prevent the stateless
 // widget from rebuilding every time it receives data from the stream:
+// apply EXACTLY 1 TIME! (== not with getter)
   _itemsTransformer() {
     return ScanStreamTransformer(
         (Map<int, Future<ItemModel>>? cache, int id, index) {
