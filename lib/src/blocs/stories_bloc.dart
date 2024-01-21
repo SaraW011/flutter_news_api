@@ -16,6 +16,12 @@ class StoriesBloc {
 //streamcontroller that emits the most recent data event:
   final _items = BehaviorSubject<int>();
 
+//instance var that will hold reference to xformed stream
+  late Stream<Map<int, Future<ItemModel>>> items;
+
+//Getter to sink:
+  Function(int) get fetchItem => _items.sink.add;
+
   //GETTER *BAD PRASCTICE* SAMPLE FOR EXPOSING STREAM:!!!!!!!!!!!!!!!!!
   // b/c it runs multiple times when each widget is invoked:
   //every time the widget accesses the getter the function will run
@@ -23,8 +29,13 @@ class StoriesBloc {
 
   // get items => _items.stream.transform(_itemsTransformer());
 
-//Getter to sink:
-  Function(int) get fetchItem => _items.sink.add;
+//_itemsTransformer is called 1 time, creating 1 map cache,
+//and re-used for each widget that subscribes to the stream.
+//(It returns a new stream but does not modify the org stream):
+  storiesBloc() {
+    //stream to expose to "outside":
+    items = _items.stream.transform(_itemsTransformer());
+  }
 
 //Getter to Stream (prev Observable):
   Stream<List<int>> get topIds => _topIds.stream;
