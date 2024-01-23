@@ -34,6 +34,7 @@ class NewsList extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
+
           return ListView.builder(
             itemCount: snapshot.data?.length,
             itemBuilder: (context, int index) {
