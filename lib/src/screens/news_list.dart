@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_news_api/src/widgets/news_list_tile.dart';
 // import '/src/blocs/stories_bloc.dart';
 import '/src/blocs/stories_provider.dart';
 
@@ -19,8 +20,8 @@ class NewsList extends StatelessWidget {
           'Top News',
         ),
       ),
-      // body: buildList(bloc),
-      body: const Text("this is where the bloc is"),
+      body: buildList(bloc),
+      // body: const Text("this is where the bloc is"),
     );
   }
 
@@ -38,7 +39,10 @@ class NewsList extends StatelessWidget {
           return ListView.builder(
             itemCount: snapshot.data?.length,
             itemBuilder: (context, int index) {
-              return Text(snapshot.data![index].toString());
+              bloc.fetchItem(snapshot.data![index]);
+              return NewsListTile(
+                itemId: snapshot.data![index],
+              );
             },
           );
         });
