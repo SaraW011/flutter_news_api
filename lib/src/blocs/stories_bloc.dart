@@ -14,13 +14,17 @@ class StoriesBloc {
   //creating the StreamController = PublishSubject:
   final _topIds = PublishSubject<List<int>>();
 //streamcontroller that emits the most recent data event:
-  final _items = BehaviorSubject<int>();
+  final _itemsOutput = BehaviorSubject<Map<int, Future<ItemModel>>>();
+  final _itemsFetcher = PublishSubject<int>();
 
-//instance var that will hold reference to xformed stream
-  late Stream<Map<int, Future<ItemModel>>> items;
+//1)Getter to Stream (prev "Observable"):
+  Stream<List<int>> get topIds => _topIds.stream;
 
-//Getter to sink:
-  Function(int) get fetchItem => _items.sink.add;
+//2)Getter exposed from items output, streams will listen to it:
+  Stream<Map<int, Future<ItemModel>>> get items => _itemsOutput.stream;
+
+  //Getter to sink:
+  Function(int) get fetchItem => _itemsFetcher.sink.add;
 
   //GETTER *BAD PRASCTICE* SAMPLE FOR EXPOSING STREAM:!!!!!!!!!!!!!!!!!
   // b/c it runs multiple times when each widget is invoked:
@@ -34,11 +38,9 @@ class StoriesBloc {
 //(It returns a new stream but does not modify the org stream):
   storiesBloc() {
     //stream to expose to "outside":
-    items = _items.stream.transform(_itemsTransformer());
+    //pipe auto forwards all events to a traget(_itemsOutput)
+    _itemsFetcher.stream.transform(_itemsTransformer()).pipe(_itemsOutput);
   }
-
-//Getter to Stream (prev Observable):
-  Stream<List<int>> get topIds => _topIds.stream;
 
 //since the repository fetches the info, we will call it and send to sink:
 
@@ -65,7 +67,8 @@ class StoriesBloc {
 //closing instanse of sink ("cleanup"):
   dispose() {
     _topIds.close();
-    _items.close();
+    _itemsFetcher.close();
+    _itemsOutput.close();
   }
 }
 
