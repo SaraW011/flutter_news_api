@@ -21,6 +21,7 @@ class StoriesBloc {
   Stream<List<int>> get topIds => _topIds.stream;
 
 //2)Getter exposed from items output, streams will listen to it:
+//prevent duplication of events:
   Stream<Map<int, Future<ItemModel>>> get items => _itemsOutput.stream;
 
   //Getter to sink:
