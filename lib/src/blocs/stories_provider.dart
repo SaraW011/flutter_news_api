@@ -18,9 +18,10 @@ class StoriesProvider extends InheritedWidget {
 
 //get access to this bloc at any location in widget hierarchy:
   static StoriesBloc of(BuildContext context) {
-    return (context.getInheritedWidgetOfExactType(
-            // StoriesProvider
-            ) as StoriesProvider)
+    //Returns the nearest widget of the given InheritedWidget subclass T
+    //or null if an appropriate ancestor is not found.
+    return (context.dependOnInheritedWidgetOfExactType<StoriesProvider>()
+            as StoriesProvider)
         .bloc;
   }
 }
